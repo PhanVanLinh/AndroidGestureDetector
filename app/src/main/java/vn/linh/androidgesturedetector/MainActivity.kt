@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.GestureDetector
 import android.support.v4.view.GestureDetectorCompat
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.TextView
 
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
         detector = GestureDetectorCompat(this, MyGestureListener())
 
         findViewById<TextView>(R.id.textview).setOnTouchListener { v, event ->
+            Log.i(DEBUG_TAG, "onTouch "+getDisplayAction(event.action))
+            detector.onTouchEvent(event)
+        }
+
+        findViewById<RecyclerView>(R.id.recycler_view).setOnTouchListener { v, event ->
             Log.i(DEBUG_TAG, "onTouch "+getDisplayAction(event.action))
             detector.onTouchEvent(event)
         }
@@ -40,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onDown(event: MotionEvent): Boolean {
             Log.d(DEBUG_TAG, "onDown: " + event.toString())
-            return false
+            return true
         }
 
         override fun onFling(event1: MotionEvent, event2: MotionEvent,
